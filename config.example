@@ -1,0 +1,9 @@
+[BOT]
+name = Nano
+prefix = $
+description = Not a robot!
+token = token
+
+[LOG]
+filename = nano.log
+
