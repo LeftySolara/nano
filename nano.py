@@ -33,7 +33,7 @@ async def on_ready():
     print("Logged in as {}".format(bot.user.name))
     print("User ID: {}".format(bot.user.id))
     print("--------")
-    logger.info("Successfully logged in as {} with user id {}".format(
+    logger.info("Successfully logged in as {} with user id {}.".format(
         bot.user.name, bot.user.id))
 
 
@@ -57,6 +57,14 @@ async def info(ctx):
     embed.add_field(name="Discord.py", value=discord.__version__)
 
     await ctx.send(embed=embed)
+
+
+@bot.command()
+async def shutdown(ctx):
+    """Log out and shut down Nano."""
+    logger.info("Received shutdown command. Logging out...")
+    await ctx.send("Goodbye :wave:")
+    await bot.logout()
 
 
 bot.run(config.get_token())
