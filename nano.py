@@ -1,4 +1,4 @@
-import sys
+import traceback
 import logging
 import logging.handlers
 import discord
@@ -37,34 +37,13 @@ async def on_ready():
         bot.user.name, bot.user.id))
 
 
-@bot.command()
-async def greet(ctx):
-    """Print a nice greeting message"""
-    await ctx.send(":smiley: :wave: Hello, there!")
+initial_extentions = ["cogs.basic", "cogs.owner"]
 
-
-@bot.command()
-async def info(ctx):
-    """Display information about the bot."""
-    embed = discord.Embed(
-        title=bot.user.name, description=bot.description, color=0xb294bb)
-
-    python_version = "{}.{}.{}".format(
-        sys.version_info[0], sys.version_info[1], sys.version_info[2])
-
-    embed.add_field(name="Author", value="LeftySolara")
-    embed.add_field(name="Python", value=python_version)
-    embed.add_field(name="Discord.py", value=discord.__version__)
-
-    await ctx.send(embed=embed)
-
-
-@bot.command()
-async def shutdown(ctx):
-    """Log out and shut down Nano."""
-    logger.info("Received shutdown command. Logging out...")
-    await ctx.send("Goodbye :wave:")
-    await bot.logout()
-
+for extention in initial_extentions:
+    try:
+        bot.load_extension(extention)
+    except Exception as e:
+        logger.error("Failed to load extension {}".format(extention))
+        traceback.print_exc()
 
 bot.run(config.get_token())
