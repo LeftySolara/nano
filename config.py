@@ -60,6 +60,9 @@ class Config:
     def get_token(self):
         return self.config.get("BOT", "token")
 
+    def get_name(self):
+        return self.config.get("BOT", "name")
+
     def get_prefix(self):
         return self.config.get("BOT", "prefix")
 
