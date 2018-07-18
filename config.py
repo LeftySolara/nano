@@ -10,7 +10,8 @@ DEFAULT_CONFIG = {
         "description": "Not a robot!"
     },
     "LOG": {
-        "filename": "nano.log"
+        "filename": "nano.log",
+        "level": "20"
     }
 }
 
@@ -68,3 +69,9 @@ class Config:
 
     def get_description(self):
         return self.config.get("BOT", "description")
+
+    def get_logname(self):
+        return self.config.get("LOG", "filename")
+
+    def get_loglevel(self):
+        return int(self.config.get("LOG", "level"))

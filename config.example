@@ -4,6 +4,8 @@ prefix = $
 description = Not a robot!
 token = token
 
+# Log levels:
+# 50 = critical, 40 = error, 30 = warning, 20 = info, 10 = debug
 [LOG]
 filename = nano.log
-
+level = 20
