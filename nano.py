@@ -1,9 +1,17 @@
+import sys
 import traceback
 import logging
 import logging.handlers
-import discord
 
-from discord.ext import commands
+try:
+    import discord
+    from discord.ext import commands
+except ModuleNotFoundError:
+    print("discord.py is not installed.\n"
+          "Instructions for installation can be found at "
+          "https://discordpy.readthedocs.io/en/rewrite/")
+    sys.exit(1)
+
 from config import Config
 
 
