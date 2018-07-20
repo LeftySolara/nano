@@ -43,6 +43,7 @@ class Owner:
 
     @commands.command(name="uptime")
     async def uptime(self, ctx):
+        """DIsplay the uptime of the bot"""
         now = time.time()
         timediff = int(now - self.bot.start_time)
 
