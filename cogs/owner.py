@@ -1,3 +1,5 @@
+import datetime
+import time
 import discord
 from discord.ext import commands
 
@@ -38,6 +40,27 @@ class Owner:
         owner = self.bot.get_user(self.bot.owner_id)
         await owner.send(embed=embed)
         await ctx.send("Your message has been sent.")
+
+    @commands.command(name="uptime")
+    async def uptime(self, ctx):
+        now = time.time()
+        timediff = int(now - self.bot.start_time)
+
+        days = timediff // (24 * 3600)
+
+        timediff %= (24 * 3600)
+        hours = timediff // 3600
+
+        timediff %= 3600
+        minutes = timediff // 60
+
+        timediff %= 60
+        seconds = timediff
+
+        message = "I have been up for {} days, {} hours, {} minutes, and {} seconds.".format(
+            days, hours, minutes, seconds)
+
+        await ctx.send(message)
 
 
 def setup(bot):

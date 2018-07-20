@@ -1,5 +1,6 @@
 import sys
 import traceback
+import time
 import logging
 import logging.handlers
 
@@ -20,6 +21,7 @@ class Nano(commands.Bot):
         self.config = Config()
         self.command_prefix = self.config.get_prefix()
         self.logger = self.logging_init()
+        self.start_time = time.time()
 
         kwargs["description"] = self.config.get_description()
         kwargs["pm_help"] = True
