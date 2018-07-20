@@ -8,15 +8,17 @@ class Owner:
     def __init__(self, bot):
         self.bot = bot
 
-    # TODO: Add a check for the user running the command
     @commands.command(name="shutdown")
     @commands.is_owner()
     async def shutdown(self, ctx):
         """Log out and shut down Nano"""
-        self.bot.logger.info(
-            "Received shutdown signal. Closing connections...")
-        await ctx.send("Goodbye :wave:")
-        await self.bot.logout()
+        if not ctx.message.author.id == self.bot.owner_id:
+            await ctx.send("Only the owner is authorized to use this command.")
+        else:
+            self.bot.logger.info(
+                "Received shutdown signal. Closing connections...")
+            await ctx.send("Goodbye :wave:")
+            await self.bot.logout()
 
     @commands.command(name="contact")
     @commands.is_owner()
