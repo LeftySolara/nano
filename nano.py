@@ -53,6 +53,15 @@ class Nano(commands.Bot):
 
         return logger
 
+    def clean_message(self, ctx: commands.Context):
+        """Return a message with the command prefix and name removed."""
+        content = ctx.message.content
+        prefix = ctx.prefix
+        command = ctx.command.name
+
+        return content.replace(prefix + command, '')
+
+
 
 nano = Nano()
 
