@@ -15,7 +15,7 @@ class Owner:
     @commands.command(name="shutdown")
     @commands.is_owner()
     async def shutdown(self, ctx):
-        """Log out and shut down Nano"""
+        """Logs out and shuts down Nano"""
         if not ctx.message.author.id == self.bot.owner_id:
             await ctx.send("Only the owner is authorized to use this command.")
         else:
@@ -27,7 +27,7 @@ class Owner:
     @commands.command(name="contact")
     @commands.is_owner()
     async def contact(self, ctx):
-        """Send a message to the bot's owner"""
+        """Sends a message to the owner"""
         author = ctx.author
         colour = author.colour
         message = self.bot.clean_message(ctx)
@@ -46,7 +46,7 @@ class Owner:
     @commands.command(name="load")
     @commands.is_owner()
     async def load(self, ctx):
-        """Load a cog into the bot"""
+        """Loads a cog"""
         if not ctx.message.author.id == self.bot.owner_id:
             await ctx.send("Only the owner is authorized to use this command.")
             return
@@ -70,7 +70,7 @@ class Owner:
     @commands.command(name="unload")
     @commands.is_owner()
     async def unload(self, ctx):
-        """Unload a cog from the bot"""
+        """Unloads a cog"""
         if not ctx.message.author.id == self.bot.owner_id:
             await ctx.send("Only the owner is authorized to use this command.")
             return
@@ -90,7 +90,7 @@ class Owner:
 
     @commands.command(name="uptime")
     async def uptime(self, ctx):
-        """DIsplay the uptime of the bot"""
+        """Shows Nano's uptime"""
         now = time.time()
         timediff = int(now - self.bot.start_time)
 

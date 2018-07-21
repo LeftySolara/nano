@@ -11,12 +11,12 @@ class Basic:
 
     @commands.command(name="greet", aliases=["hello"])
     async def greet(self, ctx):
-        """Print a nice greeting message."""
+        """Prints a nice greeting message"""
         await ctx.send(":smiley: :wave: Hello, there!")
 
     @commands.command(name="info", aliases=["information"])
     async def info(self, ctx):
-        """Display information about the bot"""
+        """Displays information about Nano"""
         embed = discord.Embed(
             title=self.bot.user.name,
             description=self.bot.description,
