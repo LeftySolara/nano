@@ -22,14 +22,14 @@ class Nano(commands.Bot):
         self.command_prefix = self.config.get_prefix()
         self.logger = self.logging_init()
         self.start_time = time.time()
+        self.core_extensions = ["cogs.basic", "cogs.owner"]
 
         kwargs["description"] = self.config.get_description()
         kwargs["pm_help"] = True
 
         super().__init__(*args, command_prefix=self.command_prefix, **kwargs)
 
-        core_extentions = ["cogs.basic", "cogs.owner"]
-        for extention in core_extentions:
+        for extention in self.core_extensions:
             try:
                 self.load_extension(extention)
             except Exception as e:

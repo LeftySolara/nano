@@ -3,6 +3,8 @@ import time
 import discord
 from discord.ext import commands
 
+#TODO: add check coroutine for checking ownership status of user
+
 
 class Owner:
     """A cog containing owner-restricted commands"""
@@ -40,6 +42,27 @@ class Owner:
         owner = self.bot.get_user(self.bot.owner_id)
         await owner.send(embed=embed)
         await ctx.send("Your message has been sent.")
+
+    @commands.command(name="unload")
+    @commands.is_owner()
+    async def unload(self, ctx):
+        """Unload a cog from the bot"""
+        if not ctx.message.author.id == self.bot.owner_id:
+            await ctx.send("Only the owner is authorized to use this command.")
+            return
+
+        cog_name = self.bot.clean_message(ctx).strip()
+        if "cogs.{}".format(cog_name) in self.bot.core_extensions:
+            await ctx.send("Cannot unload core cog.")
+            return
+
+        if self.bot.get_cog(cog_name.capitalize()):
+            self.bot.unload_extension("cogs." + cog_name)
+            await ctx.send("Unloaded cog {}.".format(cog_name))
+            self.bot.logger.info("Command Unload: unloaded cog {}".format(
+                cog_name.capitalize()))
+        else:
+            await ctx.send("Cog \"{}\" not found.".format(cog_name))
 
     @commands.command(name="uptime")
     async def uptime(self, ctx):
