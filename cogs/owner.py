@@ -1,5 +1,5 @@
-import datetime
 import time
+import traceback
 import discord
 from discord.ext import commands
 
@@ -43,6 +43,30 @@ class Owner:
         await owner.send(embed=embed)
         await ctx.send("Your message has been sent.")
 
+    @commands.command(name="load")
+    @commands.is_owner()
+    async def load(self, ctx):
+        """Load a cog into the bot"""
+        if not ctx.message.author.id == self.bot.owner_id:
+            await ctx.send("Only the owner is authorized to use this command.")
+            return
+
+        cog_name = self.bot.clean_message(ctx).strip()
+        if self.bot.get_cog(cog_name.capitalize()):
+            await ctx.send("Cog \"{}\" already loaded.".format(cog_name))
+            return
+
+        try:
+            self.bot.load_extension("cogs." + cog_name)
+            await ctx.send("Loaded cog \"{}\".".format(cog_name))
+            self.bot.logger.info(
+                "Command Load: loaded extension {}".format(cog_name))
+        except Exception as e:
+            await ctx.send("Error: unable to load cog.")
+            self.bot.logger.error(
+                "Command Load: Failed to load extension {}".format(cog_name))
+            traceback.print_exc()
+
     @commands.command(name="unload")
     @commands.is_owner()
     async def unload(self, ctx):
@@ -59,8 +83,8 @@ class Owner:
         if self.bot.get_cog(cog_name.capitalize()):
             self.bot.unload_extension("cogs." + cog_name)
             await ctx.send("Unloaded cog {}.".format(cog_name))
-            self.bot.logger.info("Command Unload: unloaded cog {}".format(
-                cog_name.capitalize()))
+            self.bot.logger.info("Command Unload: unloaded extension {}".
+                                 format(cog_name.capitalize()))
         else:
             await ctx.send("Cog \"{}\" not found.".format(cog_name))
 
