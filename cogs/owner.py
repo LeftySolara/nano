@@ -3,8 +3,6 @@ import traceback
 import discord
 from discord.ext import commands
 
-#TODO: add check coroutine for checking ownership status of user
-
 
 class Owner:
     """A cog containing owner-restricted commands"""
@@ -16,16 +14,12 @@ class Owner:
     @commands.is_owner()
     async def shutdown(self, ctx):
         """Logs out and shuts down Nano"""
-        if not ctx.message.author.id == self.bot.owner_id:
-            await ctx.send("Only the owner is authorized to use this command.")
-        else:
-            self.bot.logger.info(
-                "Received shutdown signal. Closing connections...")
-            await ctx.send("Goodbye :wave:")
-            await self.bot.logout()
+        self.bot.logger.info(
+            "Received shutdown signal. Closing connections...")
+        await ctx.send("Goodbye :wave:")
+        await self.bot.logout()
 
     @commands.command(name="contact")
-    @commands.is_owner()
     async def contact(self, ctx):
         """Sends a message to the owner"""
         author = ctx.author
@@ -47,10 +41,6 @@ class Owner:
     @commands.is_owner()
     async def load(self, ctx):
         """Loads a cog"""
-        if not ctx.message.author.id == self.bot.owner_id:
-            await ctx.send("Only the owner is authorized to use this command.")
-            return
-
         cog_name = self.bot.clean_message(ctx).strip()
         if self.bot.get_cog(cog_name.capitalize()):
             await ctx.send("Cog \"{}\" already loaded.".format(cog_name))
@@ -71,10 +61,6 @@ class Owner:
     @commands.is_owner()
     async def unload(self, ctx):
         """Unloads a cog"""
-        if not ctx.message.author.id == self.bot.owner_id:
-            await ctx.send("Only the owner is authorized to use this command.")
-            return
-
         cog_name = self.bot.clean_message(ctx).strip()
         if "cogs.{}".format(cog_name) in self.bot.core_extensions:
             await ctx.send("Cannot unload core cog.")
